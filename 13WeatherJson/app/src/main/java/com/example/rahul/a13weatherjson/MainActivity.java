@@ -4,6 +4,7 @@ import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.view.animation.Animation;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -30,19 +31,23 @@ public class MainActivity extends AppCompatActivity {
         button = (Button)findViewById(R.id.button);
         city = (EditText)findViewById(R.id.editText);
         result = (TextView)findViewById(R.id.textView2);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                button.animate().rotation(2160).setDuration(2000);//.rotation(-2160).setDuration(1000);
+                try{
+                    DownloadTask task = new DownloadTask();
+                    String encodedCityName = URLEncoder.encode(city.getText().toString(),"UTF-8");
+                    task.execute("https://openweathermap.org/data/2.5/weather?q=" + encodedCityName + "&appid=b6907d289e10d714a6e88b30761fae22");
+                }
+                catch (Exception e){
+                    e.printStackTrace();
+                    Toast.makeText(getApplicationContext(),"Not available",Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
     }
-    public void btnClick(View view){
-        view.animate().rotation(2160).setDuration(2000);
-        try{
-        DownloadTask task = new DownloadTask();
-        String encodedCityName = URLEncoder.encode(city.getText().toString(),"UTF-8");
-        task.execute("https://openweathermap.org/data/2.5/weather?q=" + encodedCityName + "&appid=b6907d289e10d714a6e88b30761fae22");
-        }
-        catch (Exception e){
-            e.printStackTrace();
-            Toast.makeText(getApplicationContext(),"Not available",Toast.LENGTH_SHORT).show();
-        }
-    }
+
 
     public class DownloadTask extends AsyncTask<String, Void, String>{
 
@@ -93,10 +98,13 @@ public class MainActivity extends AppCompatActivity {
             }
             if(!message.equals("")){
                 result.setText(message);
+                button.animate().rotation(0).setDuration(0);
 
             }
         }catch (Exception e){
+
             Toast.makeText(getApplicationContext(),"Not available",Toast.LENGTH_SHORT).show();
+            button.animate().rotation(0).setDuration(0);
         }
         }
     }
