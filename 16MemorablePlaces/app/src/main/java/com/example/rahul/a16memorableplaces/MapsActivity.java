@@ -24,7 +24,7 @@ import com.google.android.gms.maps.model.MarkerOptions;
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
 
-    private GoogleMap mMap;
+    GoogleMap mMap;
     LocationManager locationManager;
     LocationListener locationListener;
 
@@ -49,17 +49,16 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     public void centerMapOnLocation(Location location, String title) {
         if(location != null){
 
-            mMap.clear();
-            LatLng userLocation = new LatLng(10,10);
-//            LatLng userLocation = new LatLng(location.getLatitude(),location.getLongitude());
-//            mMap.addMarker(new MarkerOptions().position(userloc).title("MyCurrentLocation").icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_CYAN)));
-//            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(userloc,1));
-//            LatLng userLocation = new LatLng(10,10);
-//
-            mMap.addMarker(new MarkerOptions().position(userLocation).title(title));
-            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(userLocation, 1));
+            try{
+
+                mMap.clear();
+                LatLng userLocation = new LatLng(10,10);
+                mMap.addMarker(new MarkerOptions().position(userLocation).title(title));
+                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(userLocation, 1));
+            }catch (Exception e){
+                Toast.makeText(getApplicationContext(),e.toString(),Toast.LENGTH_SHORT).show();
+            }
             Toast.makeText(getApplicationContext(),"if",Toast.LENGTH_SHORT).show();
-         //
         }
         else
         {
@@ -68,16 +67,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
             mMap.clear();
             LatLng userLocation = new LatLng(10,10);
-//            LatLng userLocation = new LatLng(location.getLatitude(),location.getLongitude());
-//            mMap.addMarker(new MarkerOptions().position(userloc).title("MyCurrentLocation").icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_CYAN)));
-//            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(userloc,1));
-//            LatLng userLocation = new LatLng(10,10);
-//
             mMap.addMarker(new MarkerOptions().position(userLocation).title(title));
             mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(userLocation, 1));
             //
         }
-           // Toast.makeText(getApplicationContext(),"Location is null",Toast.LENGTH_SHORT).show();
     }
 
     @Override
