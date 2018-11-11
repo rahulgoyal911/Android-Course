@@ -1,0 +1,4 @@
+#Sun Nov 11 11:42:07 IST 2018
+base.0=/home/rahulgoyal911/Downloads/Android-Course/17CoinMAn/android/build/intermediates/transforms/dexMerger/debug/7
+path.0=classes.dex
+renamed.0=classes.dex
